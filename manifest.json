@@ -1,0 +1,9 @@
+{
+  "name": "SoulGuide AI",
+  "short_name": "SoulGuide",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#080812",
+  "theme_color": "#7c3aed",
+  "icons": []
+}

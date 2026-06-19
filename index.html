@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoulGuide AI</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>🧠✨ SoulGuide AI</h1>
+      <p>Your mind, mood & healing guide</p>
+      <small>Tamil + Tanglish + English Support</small>
+    </header>
+
+    <main id="chatBox">
+      <div class="message bot">
+        Vanakkam! Welcome to <b>SoulGuide AI</b>.<br><br>
+        Naan unga mood-ku suitable-a anime, movie, web series, song, book, kavithai, psychology tips, yoga suggestions kuduppen.<br><br>
+        Ungalukku enna help venum?
+      </div>
+
+      <div class="chips">
+        <button onclick="chooseCategory('anime')">🎌 Anime</button>
+        <button onclick="chooseCategory('movie')">🎬 Movie</button>
+        <button onclick="chooseCategory('webseries')">📺 Web Series</button>
+        <button onclick="chooseCategory('song')">🎵 Song</button>
+        <button onclick="chooseCategory('book')">📖 Book</button>
+        <button onclick="chooseCategory('poetry')">📝 Kavithai / Poetry</button>
+        <button onclick="chooseCategory('psychology')">💬 Psychology Support</button>
+        <button onclick="chooseCategory('yoga')">🧘 Yoga & Exercise</button>
+      </div>
+    </main>
+
+    <footer>
+      <input id="userInput" placeholder="Type here... / இங்கே type பண்ணுங்கள்" onkeydown="if(event.key==='Enter') sendMessage()" />
+      <button onclick="sendMessage()">Send</button>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

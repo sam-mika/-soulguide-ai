@@ -1,0 +1,117 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #2b145f, #080812 55%, #020207);
+  color: white;
+}
+
+.app {
+  max-width: 760px;
+  margin: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.25);
+}
+
+header {
+  padding: 22px;
+  text-align: center;
+  background: rgba(12, 12, 35, 0.92);
+  border-bottom: 1px solid #46308d;
+}
+
+header h1 {
+  margin: 0;
+  color: #c4a3ff;
+  font-size: 32px;
+}
+
+header p { color: #eee8ff; margin: 8px 0 4px; }
+header small { color: #9fdcff; }
+
+main {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  padding-bottom: 90px;
+}
+
+.message {
+  padding: 13px 14px;
+  margin: 10px 0;
+  border-radius: 16px;
+  line-height: 1.55;
+  animation: pop 0.2s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.98); opacity: 0.5; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.bot {
+  background: rgba(35, 35, 80, 0.95);
+  color: #f4efff;
+  border: 1px solid rgba(196, 163, 255, 0.2);
+}
+
+.user {
+  background: linear-gradient(135deg, #0b7bd3, #7c3aed);
+  color: white;
+  margin-left: 22%;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 16px 0;
+}
+
+.chips button {
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  color: white;
+  border: none;
+  padding: 10px 13px;
+  border-radius: 22px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+footer {
+  display: flex;
+  gap: 9px;
+  padding: 12px;
+  background: rgba(12, 12, 35, 0.96);
+  border-top: 1px solid #46308d;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 760px;
+}
+
+input {
+  flex: 1;
+  padding: 13px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+}
+
+footer button {
+  padding: 13px 18px;
+  background: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  header h1 { font-size: 25px; }
+  .user { margin-left: 10%; }
+}
