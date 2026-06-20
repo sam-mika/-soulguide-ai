@@ -73,37 +73,33 @@ function chooseCategory(category) {
   }
 }
 
-function sendMessage() {
+async function sendMessage() {
   const input = document.getElementById("userInput");
   const msg = input.value.trim();
+
   if (!msg) return;
 
   addMessage(msg, "user");
   input.value = "";
 
-  const lower = msg.toLowerCase();
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: msg,
+      }),
+    });
 
-  if (emergencyWords.some(word => lower.includes(word))) {
-    emergencyReply();
-    return;
+    const data = await response.json();
+
+    addMessage(data.reply, "bot");
+
+  } catch (error) {
+    addMessage("AI response error. Please try again.", "bot");
   }
-
-  if (!selectedCategory) {
-    addMessage("Mudhalil category select pannunga: Anime, Movie, Song, Book, Kavithai, Psychology, Yoga.", "bot");
-    return;
-  }
-
-  if (selectedCategory === "psychology") {
-    psychologyReply(lower);
-    return;
-  }
-
-  if (selectedCategory === "yoga") {
-    yogaReply(lower);
-    return;
-  }
-
-  recommend(selectedCategory, lower);
 }
 
 function recommend(category, mood) {
