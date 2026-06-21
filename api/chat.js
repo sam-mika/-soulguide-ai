@@ -55,6 +55,7 @@ ${message}
 
     const data = await response.json();
 console.log("Gemini Response:", JSON.stringify(data, null, 2));
+  
     const reply =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "Sorry, I couldn't generate a response.";
