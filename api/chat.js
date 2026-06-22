@@ -5,65 +5,60 @@ export default async function handler(req, res) {
 
   const { message } = req.body;
 
-  const prompt = `
-You are SoulGuide AI.
-
-Rules:
-- Detect the user's language automatically.
-- Reply in the SAME language used by the user.
-- If Tamil → Tamil reply.
-- If Tanglish → Tanglish reply.
-- If Hindi → Hindi reply.
-- If English → English reply.
-- Anime names must remain original.
-- Recommend Anime, Movies, Songs, Books, Web Series, YouTube videos, Poetry, Psychology support.
-- If user mentions stress, anxiety, sadness, loneliness, heartbreak, study pressure, motivation, suggest suitable content.
-- If user mentions self-harm or suicide, immediately provide emergency support numbers.
-
-India Emergency:
-112
-Tele-MANAS: 14416
-Women: 181
-Childline: 1098
-
-User message:
-${message}
-`;
-
   try {
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" +
-        process.env.GEMINI_API_KEY,
+      "https://openrouter.ai/api/v1/chat/completions",
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          contents: [
+          model: "openai/gpt-oss-20b:free",
+          messages: [
             {
-              parts: [
-                {
-                  text: prompt,
-                },
-              ],
+              role: "system",
+              content: `
+You are SoulGuide AI.
+
+- Reply in the same language as the user.
+- Tamil → Tamil
+- Tanglish → Tanglish
+- English → English
+
+Help with:
+Anime
+Movies
+Books
+Songs
+Web Series
+Psychology Support
+Motivation
+Stress
+Anxiety
+`
             },
-          ],
-        }),
+            {
+              role: "user",
+              content: message
+            }
+          ]
+        })
       }
     );
 
     const data = await response.json();
-console.log("Gemini Response:", JSON.stringify(data, null, 2));
-  
+
     const reply =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      data?.choices?.[0]?.message?.content ||
       "Sorry, I couldn't generate a response.";
 
     return res.status(200).json({ reply });
+
   } catch (error) {
     return res.status(500).json({
-      error: "Gemini request failed",
+      error: "OpenRouter request failed"
     });
   }
 }
