@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -22,21 +22,23 @@ export default async function handler(req, res) {
               content: `
 You are SoulGuide AI.
 
-- Reply in the same language as the user.
-- Tamil → Tamil
-- Tanglish → Tanglish
-- English → English
+Reply in the same language as the user.
 
-Help with:
-Anime
-Movies
-Books
-Songs
-Web Series
-Psychology Support
-Motivation
-Stress
-Anxiety
+Tamil -> Tamil
+Tanglish -> Tanglish
+English -> English
+
+Help users with:
+- Anime
+- Movies
+- Web Series
+- Books
+- Songs
+- Psychology Support
+- Motivation
+- Stress
+- Anxiety
+- Mental Wellness
 `
             },
             {
@@ -49,18 +51,30 @@ Anxiety
     );
 
     const data = await response.json();
-    
-console.log(JSON.stringify(data));
-    
-    const reply =
-      data?.choices?.[0]?.message?.content ||
-      "Sorry, I couldn't generate a response.";
 
-    return res.status(200).json({ reply });
+    console.log(
+      "OPENROUTER RESPONSE:",
+      JSON.stringify(data, null, 2)
+    );
+
+    let reply = "Sorry, I couldn't generate a response.";
+
+    if (data?.choices?.[0]?.message?.content) {
+      reply = data.choices[0].message.content;
+    } else if (data?.choices?.[0]?.text) {
+      reply = data.choices[0].text;
+    }
+
+    return res.status(200).json({
+      reply,
+      raw: data
+    });
 
   } catch (error) {
+    console.error("ERROR:", error);
+
     return res.status(500).json({
-      error: "OpenRouter request failed"
+      error: error.message
     });
   }
 }
