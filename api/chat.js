@@ -49,7 +49,9 @@ Anxiety
     );
 
     const data = await response.json();
-
+    
+console.log(JSON.stringify(data));
+    
     const reply =
       data?.choices?.[0]?.message?.content ||
       "Sorry, I couldn't generate a response.";
